@@ -22,7 +22,9 @@ jobs:
           persist-credentials: false
 
       - name: Install Actions
-        run: npm install --production --prefix ./actions
+        run: |
+          corepack enable
+          cd actions && yarn install --immutable
 
       - name: Run backport
         uses: ./actions/backport
