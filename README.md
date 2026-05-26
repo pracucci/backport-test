@@ -16,3 +16,6 @@ Test PR #3 — proper label assignment via REST API.
 ## Feature 4
 
 PR #4 — proper label via API.
+## Feature 5
+
+Test with backport + type/bug labels.
