@@ -1,0 +1,32 @@
+name: Backport
+
+on:
+  pull_request:
+    types: [closed, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  backport:
+    if: github.event.pull_request.merged == true || (github.event.action == 'labeled' && startsWith(github.event.label.name, 'backport '))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Actions
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          repository: grafana/grafana-github-actions
+          path: ./actions
+          ref: ce15900ea5af59b4af848d268b33438c0693f10b  # PR #293 tip
+          persist-credentials: false
+
+      - name: Install Actions
+        run: npm install --production --prefix ./actions
+
+      - name: Run backport
+        uses: ./actions/backport
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          labelsToAdd: backport
+          title: "[{{base}}] {{originalTitle}}"
