@@ -13,3 +13,6 @@ This change should be backported to release-1.0.
 ## Feature 3
 
 Test PR #3 — proper label assignment via REST API.
+## Feature 4
+
+PR #4 — proper label via API.
